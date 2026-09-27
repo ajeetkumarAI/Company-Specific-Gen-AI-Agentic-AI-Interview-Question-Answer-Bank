@@ -61,13 +61,15 @@ Numbers can contain useful information depending on the problem.
 For example:
 
 ```text
-1 start due to functional performance
-2 start due to asthetic look
-Iphone worth 5 start
+1 star due to functional performance digital watch
+2 star due to asthetic look
+Iphone 17 pro worth 5 star
+Iphone 17 worth 4 star
+Apple watch 2.0 5 star
 2026 internship
 5 years experience
 20% discount
-iPhone 15 
+iPhone 15 3 star
 COVID-19
 ```
 
