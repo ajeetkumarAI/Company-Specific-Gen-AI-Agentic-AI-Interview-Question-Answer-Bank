@@ -1,8 +1,8 @@
-# NLP Interview Questions — Verified and Collected from different Candidate-Reported Questions
+# NLP Interview Questions — Verified Candidate-Reported Questions
 
 ## Research Standard
 
-This document contains NLP questions that were **reported by candidates as being asked in actual interviews or technical interview rounds**.
+This document contains NLP questions that were **reported by candidates as being asked in actual interviews or technical interview rounds which are collected from candidates and open source platforms**.
 
 ### Evidence sources used
 
@@ -15,6 +15,11 @@ This document contains NLP questions that were **reported by candidates as being
 - **KnowDis Data Science — Data Scientist:** 2025 candidate report covering RNN, LSTM, Transformer components, positional embeddings, multi-head attention, encoder/decoder, masked decoder, autoregressive LLMs and DistilBERT.
 - **Level AI — Machine Learning Engineer - NLP:** 2025 candidate report covering self-attention vs multi-head attention, Sentence Transformers, positional embeddings, RoPE, decoder inputs/outputs, beam search and RAG.
 - **Dimensionless Technologies — NLP Intern:** candidate-reported NLU/NLG question.
+
+> **Important:** "Verified" here means that a candidate/interview report explicitly contains the question or clearly reports that topic being asked. It does **not** mean the question is asked in every interview.
+>
+> **Part 8 below is different from Parts 1–7.** It is not tied to a specific named company/candidate report. It covers practical, applied preprocessing questions (lowercasing, stopwords, live-text-cleaning).
+
 ---
 
 # Part 1 — NLP Preprocessing and Classical NLP
@@ -1168,6 +1173,207 @@ The important part is explaining **why** each decision was made.
 
 ---
 
+# Part 8 — Practical Preprocessing Questions: Casing, Stopwords, and Live-Coding a Real Messy String
+
+
+## 41. Why do you do text normalization? Why do you want to lowercase? In real-time we get different forms of a word — lower or upper case — that we cannot control. Do you think keeping different-case words gives better understanding?
+
+### Answer: [TODO]
+---
+
+## 42. Why remove stopwords? In real time, the user is going to use stopwords. If you remove them from the training pipeline, then at inference/production time stopwords are still going to appear in the input — but the machine was never trained on them. How do you handle this?
+
+### Answer: [TODO]
+
+**Why remove stopwords in the first place:** words like "the," "is," "a," "and" occur in almost every document regardless of class/topic, so they add little discriminative value for tasks like topic classification — removing them shrinks the vocabulary, reduces noise, and speeds up training.
+
+**Why you should not always remove them:** the classic counter-example is negation-sensitive tasks:
+
+```text
+"The movie was not good at all."
+→ after naive stopword removal: "movie good"
+```
+
+The review is negative, but stripping "not," "was," "at," "all" flips the apparent sentiment to positive — this is why stopword removal has to be a task-dependent decision, not a blanket step.
+
+---
+
+## 43. When should you remove stopwords, and when should you not? List down some practical applications.
+
+### Answer
+
+**Remove stopwords when the task cares about topic/frequency signal, not exact wording or word order:**
+
+| Application | Why removal helps |
+|---|---|
+| Document/topic classification (news category, spam vs ham) | Stopwords occur at similar frequency across all classes, so they carry no discriminative value; removing them shrinks the vocabulary and speeds up training. |
+| Search engines / information retrieval (classic keyword/BM25-style) | Prevents high-frequency words like "the," "of," "to" from dominating relevance scoring; keeps the focus on content words. |
+| Topic modeling (LDA, clustering) | Topics are defined by content words; stopwords would appear in every topic equally and just add noise. |
+| Keyword extraction / extractive summarization with TF-IDF | High-frequency stopwords would otherwise get inflated raw counts and drown out genuinely important terms. |
+| Word clouds / text visualization | Removing stopwords surfaces the words that are actually informative about the content. |
+
+**Do NOT remove stopwords when meaning depends on function words, negation, or word order:**
+
+| Application | Why removal hurts |
+|---|---|
+| Sentiment analysis | "not good" → "good" flips polarity outright; negation words are stopwords in most default lists. |
+| Machine translation | Function words carry grammatical structure needed to produce correct target-language syntax. |
+| Text generation / language modeling | The model needs to produce fluent, grammatical sequences — stopwords are part of the sequence being modeled, not noise to discard. |
+| Named Entity Recognition / POS tagging | Function words provide syntactic context that helps identify entity boundaries and part-of-speech roles. |
+| Question answering | "What is the capital of France?" — stripping "is," "of" can remove structure needed to correctly interpret the question type. |
+| Any pipeline feeding a pretrained Transformer (BERT, GPT, sentence embeddings) | These models were pretrained on natural, un-stripped text; feeding them artificially stopword-stripped input creates a mismatch with pretraining and typically hurts rather than helps performance. |
+
+**One-line interview summary:** *"Remove stopwords for frequency/topic-based classical pipelines where function words are pure noise; keep them for anything sequence-, negation-, or grammar-sensitive — and virtually always keep them when feeding a pretrained Transformer, since removal creates a mismatch with how that model was pretrained."*
+
+---
+
+## 44. Live-coding task: clean this exact messy, real-world string end-to-end.
+
+### Given
+
+```python
+raw_text = """
+Heyyyy!!! I justtt bought this product from @Amazon on 15/09/2026 😍. TBH, it's sooo goodddd!!! The price was ₹1,999.99 & I got 20% OFF!!! But the delivery took 3 days... idk why they were sooo slow :/ Plz check ur order carefully b4 buying. I can't say it's 100% perfect, but I'd definitely recommend it!!! BTW, customer service was gr8 & they replied ASAP. This product is MUCHHH better than the previous one!!! #AmazingDeal #WorthIt
+"""
+```
+
+### Task
+
+Perform the following NLP preprocessing steps:
+
+- Remove mentions such as `@Amazon`
+- Remove hashtags such as `#AmazingDeal`, `#WorthIt`
+- Convert text to lowercase
+- Expand contractions (`it's` → `it is`, `can't` → `cannot`, `I'd` → `I would`)
+- Normalize repeated characters (`Heyyyy` → `Hey`, `justtt` → `just`, `sooo` → `so`, `goodddd` → `good`, `MUCHHH` → `much`)
+- Expand common chat abbreviations (`TBH` → `to be honest`, `idk` → `I do not know`, `Plz` → `please`, `ur` → `your`, `b4` → `before`, `BTW` → `by the way`, `gr8` → `great`, `ASAP` → `as soon as possible`)
+- Remove emojis
+- Remove punctuation and special characters
+- Remove numbers
+- Normalize extra spaces
+- Tokenize the final text into words
+
+### Expected clean text
+
+```python
+clean_text = """hey i just bought this product on it is to be honest it is so good the price was and i got off but the delivery took days i do not know why they were so slow please check your order carefully before buying i cannot say it is perfect but i would definitely recommend it by the way customer service was great and they replied as soon as possible this product is much better than the previous one"""
+```
+
+### Approach — order matters
+
+1. **Expand contractions and chat abbreviations first**, while punctuation like apostrophes and word boundaries are still intact.
+2. **Remove mentions (`@word`) and hashtags (`#word`)** before stripping punctuation, since `@`/`#` are the anchor characters being matched.
+3. **Remove emojis.**
+4. **Normalize repeated characters** (`sooo` → `so`, `MUCHHH` → `much`) before lowercasing/punctuation removal, while the run-length pattern is still clean.
+5. **Lowercase.**
+6. **Remove currency amounts, dates, percentages and remaining numbers.**
+7. **Remove punctuation/special characters** (keep letters and spaces only).
+8. **Collapse extra whitespace.**
+9. **Tokenize.**
+
+### Solution
+
+```python
+import re
+
+def clean_text_fn(text: str) -> str:
+    # 1. Expand contractions (before punctuation is stripped)
+    contractions = {
+        r"\bit's\b": "it is",
+        r"\bcan't\b": "cannot",
+        r"\bi'd\b": "i would",
+        r"\bi'm\b": "i am",
+        r"\bwon't\b": "will not",
+        r"\bdon't\b": "do not",
+    }
+    for pattern, repl in contractions.items():
+        text = re.sub(pattern, repl, text, flags=re.IGNORECASE)
+
+    # 2. Expand common chat abbreviations (word-boundary matched, case-insensitive)
+    abbreviations = {
+        r"\btbh\b": "to be honest",
+        r"\bidk\b": "i do not know",
+        r"\bplz\b": "please",
+        r"\bur\b": "your",
+        r"\bb4\b": "before",
+        r"\bbtw\b": "by the way",
+        r"\bgr8\b": "great",
+        r"\basap\b": "as soon as possible",
+    }
+    for pattern, repl in abbreviations.items():
+        text = re.sub(pattern, repl, text, flags=re.IGNORECASE)
+
+    # 3. Remove mentions and hashtags
+    text = re.sub(r"@\w+", "", text)
+    text = re.sub(r"#\w+", "", text)
+
+    # 4. Remove emojis (broad Unicode emoji ranges)
+    emoji_pattern = re.compile(
+        "["
+        "\U0001F300-\U0001FAFF"  # symbols & pictographs, emoticons, transport, supplemental
+        "\U00002700-\U000027BF"  # dingbats
+        "\U0001F1E0-\U0001F1FF"  # flags
+        "]+",
+        flags=re.UNICODE,
+    )
+    text = emoji_pattern.sub("", text)
+
+    # 5. Normalize repeated characters: 3+ repeats of a letter -> collapse to 1
+    #    ("sooo" -> "so", "goodddd" -> "good", "MUCHHH" -> "much")
+    text = re.sub(r"(.)\1{2,}", r"\1", text)
+
+    # 6. Lowercase
+    text = text.lower()
+
+    # 7. Remove currency amounts / dates / percentages / remaining numbers
+    text = re.sub(r"[₹$€]\s?[\d,]+\.?\d*", " ", text)   # currency amounts
+    text = re.sub(r"\d+/\d+/\d+", " ", text)             # dates
+    text = re.sub(r"\d+%", " ", text)                    # percentages
+    text = re.sub(r"\d+", " ", text)                     # remaining standalone numbers
+
+    # 8. Remove punctuation / special characters (keep letters and spaces only)
+    text = re.sub(r"[^a-z\s]", " ", text)
+
+    # 9. Collapse extra whitespace
+    text = re.sub(r"\s+", " ", text).strip()
+
+    return text
+
+
+def tokenize(text: str) -> list[str]:
+    return text.split()
+
+
+cleaned = clean_text_fn(raw_text)
+tokens = tokenize(cleaned)
+
+print(cleaned)
+print(tokens)
+```
+
+### Output (matches `clean_text` above)
+
+```text
+hey i just bought this product on it is to be honest it is so good the price was and i got off but the delivery took days i do not know why they were so slow please check your order carefully before buying i cannot say it is perfect but i would definitely recommend it by the way customer service was great and they replied as soon as possible this product is much better than the previous one
+```
+
+### Common follow-up questions after this task
+
+```text
+Why expand contractions/abbreviations before removing punctuation instead of after?
+Why normalize repeated characters before lowercasing?
+How would this regex distinguish "sooo" (elongation) from a genuine word like "wooord" if one existed?
+How would you scale this to millions of rows? (vectorized string ops, spaCy pipe, multiprocessing)
+How would you adapt this for a language where \b word boundaries don't behave the same way (e.g. Chinese, Thai)?
+What would you change if this text were feeding into a Transformer instead of TF-IDF?
+   (Direction: keep more of the original text — a cased Transformer tokenizer handles
+    casing/subwords itself, and over-aggressive cleaning can remove signal the
+    pretrained model would otherwise use.)
+How would you unit-test this function?
+```
+
+---
+
 # High-Priority Follow-Up Questions
 
 These are not separate generic questions; they are especially useful because real interviews often drill deeper into the candidate's previous answer.
@@ -1254,6 +1460,20 @@ How did you evaluate the final answer?
 How did you reduce hallucination?
 ```
 
+## If you say "I lowercased the text" or "I removed stopwords"
+
+Be ready for:
+
+```text
+Why lowercase? What if case is meaningful for this task?
+What happens to a user query typed in all caps or mixed case?
+Do modern Transformer tokenizers need manual lowercasing?
+Why remove stopwords? What if the task is sentiment or negation-sensitive?
+Does removing stopwords in training cause a mismatch at inference? (No — same pipeline both places.
+   The real risk is training/serving pipeline drift, not the model "never seeing" stopwords.)
+When would you NOT remove stopwords?
+```
+
 ---
 
 # Most Important 20 to Memorize First
@@ -1284,6 +1504,15 @@ If you have limited preparation time, prioritize these verified questions:
 ```
 
 These 20 cover the major themes that recur across the verified candidate reports: **preprocessing, representation, embeddings, sequence models, Transformers and modern RAG**.
+
+**If you also have time for practical/applied depth, add these from Part 8:**
+
+```text
+21. Why lowercase, and when does case carry real signal instead of noise?
+22. Why remove stopwords, and does removing them in training cause an inference mismatch? (It doesn't — explain why.)
+23. When should you remove stopwords vs keep them? List practical applications on both sides.
+24. Live-code an end-to-end cleaning pipeline for a messy, emoji/hashtag/abbreviation-filled real string.
+```
 
 ---
 
@@ -1325,4 +1554,12 @@ Candidate reported questions on self-attention vs multi-head attention, Sentence
 
 Candidate reported the question: "What is NLU and NLG?"
 
+### [S10] Part 8 — Practical preprocessing questions (casing, stopwords, live-coding cleanup)
+
+Not tied to a single named candidate report.
+
 ---
+
+# Research Note
+
+This document intentionally does **not** claim that these questions are guaranteed to appear in every NLP interview.
