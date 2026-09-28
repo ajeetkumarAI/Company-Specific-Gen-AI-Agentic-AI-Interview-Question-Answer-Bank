@@ -1405,3 +1405,1081 @@ Reduced manual review effort and improved productivity
 > I already work with cloud-based AI applications, and I'm deliberately strengthening the architecture side so I can design systems that scale reliably beyond individual projects.
 
 ---
+
+
+# SECTION 13 — ADVANCED LLM / GENAI
+
+### 111. What is the difference between pre-training and fine-tuning?
+
+**Answer:**
+
+> Pre-training is when a model learns general language patterns from a very large dataset.
+>
+> Fine-tuning takes that pre-trained model and trains it further on a smaller, task-specific dataset.
+>
+> Pre-training gives general capabilities, while fine-tuning can specialize the model for a particular task, style or domain.
+
+---
+
+### 112. What is instruction tuning?
+
+**Answer:**
+
+> Instruction tuning trains a model using examples where the input is an instruction and the expected output demonstrates how the model should respond.
+>
+> It improves the model's ability to follow natural-language instructions.
+
+---
+
+### 113. What is RLHF?
+
+**Answer:**
+
+> RLHF stands for Reinforcement Learning from Human Feedback.
+>
+> Human feedback is used to train or optimize a model so that its responses better align with desired human preferences and behaviors.
+
+---
+
+### 114. What is alignment in LLMs?
+
+**Answer:**
+
+> Alignment means making the model's behavior consistent with intended goals, instructions, safety requirements and user expectations.
+>
+> It can involve instruction tuning, preference optimization, safety training and application-level guardrails.
+
+---
+
+### 115. What is a foundation model?
+
+**Answer:**
+
+> A foundation model is a large model trained on broad datasets that can be adapted for many downstream tasks.
+>
+> Examples include large language and multimodal models that can be used for generation, classification, summarization, reasoning and other applications.
+
+---
+
+### 116. What is multimodal AI?
+
+**Answer:**
+
+> Multimodal AI can process or generate multiple types of information such as text, images, audio or video.
+>
+> For example, a multimodal model could analyze a product image together with a textual maintenance manual.
+
+---
+
+### 117. When would you use a multimodal model?
+
+**Answer:**
+
+> I would use it when the problem requires understanding multiple data types.
+>
+> For example, if a maintenance application needs to analyze a machine image together with a PDF manual, a multimodal model can process both sources as part of the workflow.
+
+---
+
+### 118. What is structured output?
+
+**Answer:**
+
+> Structured output means asking the model to return information in a predefined schema such as JSON.
+>
+> It is useful when the LLM output needs to be consumed by downstream application code.
+
+---
+
+### 119. Why is structured output important in enterprise applications?
+
+**Answer:**
+
+> Free-form text is difficult for applications to reliably process.
+>
+> A defined schema makes the output easier to validate, store, route and integrate with APIs.
+>
+> I would still validate the generated structure before using it for downstream actions.
+
+---
+
+### 120. How do you handle invalid LLM output?
+
+**Answer:**
+
+> I would validate the output against the expected schema.
+>
+> If validation fails, I can retry with corrective instructions, use a constrained generation approach where supported, or route the request to a fallback path.
+>
+> For critical operations, I would not execute the action until validation succeeds.
+
+---
+
+### 121. What is context engineering?
+
+**Answer:**
+
+> Context engineering is the process of designing the information provided to an LLM so that it has the right context to perform the task.
+>
+> This includes retrieved documents, conversation history, tool results, instructions, metadata and relevant user information.
+
+---
+
+### 122. Prompt engineering vs context engineering?
+
+**Answer:**
+
+> Prompt engineering focuses mainly on instructions given to the model.
+>
+> Context engineering is broader. It focuses on what information the model receives, how that information is selected, structured and prioritized.
+
+---
+
+### 123. What makes a good enterprise prompt?
+
+**Answer:**
+
+> A good prompt clearly defines the task, expected behavior, constraints, output format and handling of uncertainty.
+>
+> I also provide relevant examples when necessary and explicitly distinguish instructions from external data.
+
+---
+
+### 124. Should you always provide more context to an LLM?
+
+**Answer:**
+
+> No.
+>
+> More context can increase cost, latency and noise.
+>
+> I prefer providing the minimum relevant context required to solve the task reliably.
+
+---
+
+### 125. What is context-window overflow?
+
+**Answer:**
+
+> It occurs when the input information exceeds the model's supported context window.
+>
+> I would address it through summarization, retrieval, context compression, better chunking or selecting only the most relevant information.
+
+---
+
+### 126. What is semantic caching?
+
+**Answer:**
+
+> Semantic caching stores responses or intermediate results for queries that are semantically similar.
+>
+> If a new query is sufficiently similar to a previous one, the system may reuse the cached result rather than invoking the LLM again.
+
+---
+
+### 127. What is prompt caching?
+
+**Answer:**
+
+> Prompt caching allows reusable portions of prompts or context to be reused efficiently where the platform supports it.
+>
+> It can reduce latency and cost for applications with large repeated context.
+
+---
+
+### 128. How would you choose an LLM for a production application?
+
+**Answer:**
+
+> I would evaluate:
+>
+> * Accuracy
+> * Latency
+> * Cost
+> * Context window
+> * Tool-calling capability
+> * Multimodal requirements
+> * Security
+> * Reliability
+> * Availability
+> * Deployment options
+> * Evaluation results
+>
+> I would select based on the actual business requirements rather than model popularity.
+
+---
+
+### 129. How do you compare two LLMs?
+
+**Answer:**
+
+> I would create a representative evaluation dataset and compare both models on task-specific metrics.
+>
+> I would measure quality, latency, token usage, cost, safety and consistency.
+>
+> The final decision should be based on production requirements rather than a single benchmark.
+
+---
+
+### 130. What is LLM-as-a-judge?
+
+**Answer:**
+
+> An LLM is used to evaluate another model's response against predefined criteria.
+>
+> It can be useful for large-scale evaluation, but I would validate the evaluator itself against human judgments because an LLM judge can also make mistakes or introduce bias.
+
+---
+
+# SECTION 14 — ADVANCED RAG
+
+### 131. What is advanced RAG?
+
+**Answer:**
+
+> Advanced RAG goes beyond basic vector similarity.
+>
+> It can include query rewriting, hybrid retrieval, metadata filtering, reranking, contextual compression, multi-query retrieval, citation generation and evaluation.
+
+---
+
+### 132. What is query rewriting?
+
+**Answer:**
+
+> Query rewriting transforms the user's original question into a better search query.
+>
+> This is useful when the user's question is ambiguous, conversational or poorly suited for direct retrieval.
+
+---
+
+### 133. Give an example of query rewriting.
+
+**Answer:**
+
+> User asks:
+>
+> "What about its security requirements?"
+>
+> If the previous conversation was about a specific banking application, the system could rewrite the query as:
+>
+> "Security requirements for the banking application discussed in the previous conversation."
+>
+> This gives the retriever more useful context.
+
+---
+
+### 134. What is multi-query retrieval?
+
+**Answer:**
+
+> Instead of generating one search query, the system generates multiple variations of the user's question.
+>
+> Each query retrieves relevant documents, and the results are combined.
+>
+> This can improve recall for complex questions.
+
+---
+
+### 135. What is contextual compression?
+
+**Answer:**
+
+> Contextual compression removes irrelevant parts of retrieved documents before sending them to the LLM.
+>
+> This reduces token usage while preserving useful information.
+
+---
+
+### 136. What is metadata filtering?
+
+**Answer:**
+
+> Metadata filtering restricts retrieval based on attributes associated with documents.
+>
+> For example, documents can be filtered by department, region, document type, access level or date.
+
+---
+
+### 137. Why is metadata filtering important for enterprise RAG?
+
+**Answer:**
+
+> It can improve both relevance and security.
+>
+> For example, a user should only retrieve documents they are authorized to access.
+>
+> Authorization should be enforced by the application or data layer rather than relying on the LLM.
+
+---
+
+### 138. What is parent-child retrieval?
+
+**Answer:**
+
+> A document can be indexed using smaller child chunks for accurate retrieval while retaining a larger parent section for context.
+>
+> The system retrieves the relevant child chunk and then provides the corresponding parent context to the model.
+
+---
+
+### 139. What is hierarchical retrieval?
+
+**Answer:**
+
+> Hierarchical retrieval searches information at multiple levels.
+>
+> For example:
+>
+> ```text
+> Document
+>    ↓
+> Section
+>    ↓
+> Paragraph
+>    ↓
+> Relevant sentence
+> ```
+>
+> This can improve retrieval for large structured documents.
+
+---
+
+### 140. How would you handle tables in RAG?
+
+**Answer:**
+
+> I would avoid treating tables as ordinary paragraphs.
+>
+> Depending on the use case, I might preserve table structure, convert the table into structured representations, store metadata or use a specialized parsing strategy.
+>
+> The important point is preserving relationships between rows, columns and headers.
+
+---
+
+### 141. How would you handle PDFs containing images?
+
+**Answer:**
+
+> I would first identify whether the information is text-based or image-based.
+>
+> For text, I can use document parsing.
+>
+> For scanned pages, OCR may be required.
+>
+> If diagrams or images contain important information, I would consider multimodal processing rather than relying only on text extraction.
+
+---
+
+### 142. How would you handle scanned PDFs?
+
+**Answer:**
+
+> I would use OCR to extract the text and then validate extraction quality.
+>
+> For important documents, I would also preserve page-level metadata so the final answer can reference the original source.
+
+---
+
+### 143. How would you implement citations in RAG?
+
+**Answer:**
+
+> Each retrieved chunk should retain metadata such as document ID, page number, section and source URL where applicable.
+>
+> When generating the response, I would associate claims with the retrieved source metadata.
+>
+> I would then return citations alongside the answer.
+
+---
+
+### 144. How do you prevent unauthorized documents from entering the RAG context?
+
+**Answer:**
+
+> Authorization should happen before retrieval results are passed to the LLM.
+>
+> I would apply user or group permissions as metadata filters or access-control checks and ensure that unauthorized documents cannot be retrieved.
+
+---
+
+### 145. What is RAG poisoning?
+
+**Answer:**
+
+> RAG poisoning occurs when malicious or incorrect content is intentionally inserted into the knowledge base to influence retrieval and model responses.
+>
+> Mitigations include source validation, document governance, ingestion controls, monitoring and content verification.
+
+---
+
+### 146. What is retrieval drift?
+
+**Answer:**
+
+> Retrieval quality can degrade as documents, vocabulary, embeddings or user queries change over time.
+>
+> Continuous evaluation and monitoring are therefore important for production RAG systems.
+
+---
+
+### 147. What happens if no relevant document is retrieved?
+
+**Answer:**
+
+> The system should not force an answer.
+>
+> I would detect low retrieval confidence and either ask a clarification question, use an approved fallback source or clearly tell the user that sufficient information was not found.
+
+---
+
+### 148. How would you reduce hallucination when retrieval returns weak results?
+
+**Answer:**
+
+> I would establish a retrieval-confidence threshold.
+>
+> If the retrieved evidence is insufficient, the application should avoid generating a confident answer.
+>
+> The system can instead ask for clarification or state that the available sources don't contain enough information.
+
+---
+
+### 149. What is grounded generation?
+
+**Answer:**
+
+> Grounded generation means generating an answer based on trusted external information supplied to the model rather than relying only on its internal knowledge.
+
+---
+
+### 150. How would you measure hallucination?
+
+**Answer:**
+
+> I would create test cases with known source information and evaluate whether generated claims are supported by that information.
+>
+> Metrics can include faithfulness, citation correctness and human evaluation for high-risk use cases.
+
+---
+
+# SECTION 15 — ADVANCED AGENTIC AI
+
+### 151. What is planning in an AI agent?
+
+**Answer:**
+
+> Planning is the process of breaking a high-level objective into smaller steps that can be executed using tools or other agents.
+
+---
+
+### 152. What is tool selection?
+
+**Answer:**
+
+> Tool selection is the agent's decision about which available tool is appropriate for the current task.
+>
+> The application should still validate the tool call rather than blindly trusting the model's decision.
+
+---
+
+### 153. Should the LLM decide permissions?
+
+**Answer:**
+
+> No.
+>
+> The LLM can suggest an action, but permissions must be enforced by deterministic application and identity systems.
+>
+> The model should never be the final authorization layer.
+
+---
+
+### 154. What is agent state?
+
+**Answer:**
+
+> Agent state contains information required to continue a workflow, such as conversation history, task status, tool results and intermediate decisions.
+
+---
+
+### 155. Why is state important?
+
+**Answer:**
+
+> Without state, the system may lose information between steps.
+>
+> Stateful orchestration allows an agent to maintain context across multiple operations and recover from interruptions.
+
+---
+
+### 156. What is human-in-the-loop in an agent workflow?
+
+**Answer:**
+
+> The workflow pauses at a predefined point and asks a human to review or approve an action before continuing.
+>
+> This is especially useful for sensitive or irreversible operations.
+
+---
+
+### 157. Give an example where human approval is necessary.
+
+**Answer:**
+
+> If an agent wants to delete production data, modify user permissions or execute a financial transaction, I would require explicit authorization before execution.
+
+---
+
+### 158. What is agent observability?
+
+**Answer:**
+
+> Agent observability means tracking what the agent did during execution.
+>
+> I would capture model calls, tool calls, latency, errors, retrieved documents, decisions and final outcomes while carefully protecting sensitive information.
+
+---
+
+### 159. What would you log for an AI agent?
+
+**Answer:**
+
+> I would log:
+>
+> * Request ID
+> * Agent/workflow ID
+> * Model used
+> * Tool invoked
+> * Tool execution status
+> * Latency
+> * Error information
+> * Token usage
+> * Final outcome
+>
+> I would avoid logging sensitive data unnecessarily.
+
+---
+
+### 160. How would you debug an agent that produces wrong answers?
+
+**Answer:**
+
+> I would trace the complete execution path.
+>
+> I would check:
+>
+> 1. Initial input
+> 2. Prompt/context
+> 3. Tool selection
+> 4. Tool output
+> 5. Retrieval
+> 6. Intermediate state
+> 7. Final generation
+>
+> This helps determine whether the problem is reasoning, retrieval, tool execution or application logic.
+
+---
+
+# SECTION 16 — MULTI-AGENT SYSTEMS
+
+### 161. What is a multi-agent system?
+
+**Answer:**
+
+> A multi-agent system uses multiple specialized agents that collaborate to complete a task.
+>
+> Each agent can have a specific responsibility.
+
+---
+
+### 162. Give an example.
+
+**Answer:**
+
+> For a research workflow:
+>
+> ```text
+> Planner Agent
+>       ↓
+> Research Agent
+>       ↓
+> Analysis Agent
+>       ↓
+> Reviewer Agent
+>       ↓
+> Final Response
+> ```
+>
+> Each agent performs a specialized part of the workflow.
+
+---
+
+### 163. What are the disadvantages of multi-agent systems?
+
+**Answer:**
+
+> They increase:
+>
+> * Complexity
+> * Latency
+> * Token usage
+> * Cost
+> * Debugging difficulty
+> * Security surface
+>
+> Therefore I would use multiple agents only when specialization provides a measurable benefit.
+
+---
+
+### 164. How do agents communicate?
+
+**Answer:**
+
+> They can communicate through structured messages, shared state, tool outputs or an orchestrator.
+>
+> I prefer structured communication because it makes validation and debugging easier.
+
+---
+
+### 165. What is an orchestrator agent?
+
+**Answer:**
+
+> An orchestrator coordinates the overall workflow.
+>
+> It determines which specialized agent or tool should handle each step and manages the state and final result.
+
+---
+
+# SECTION 17 — MLOPS / LLMOPS
+
+### 166. What is MLOps?
+
+**Answer:**
+
+> MLOps applies software engineering and DevOps practices to machine-learning systems.
+>
+> It covers areas such as training, versioning, deployment, monitoring, testing and lifecycle management.
+
+---
+
+### 167. What is LLMOps?
+
+**Answer:**
+
+> LLMOps applies operational practices specifically to LLM applications.
+>
+> It includes prompt/version management, model selection, evaluation, tracing, cost monitoring, guardrails and production deployment.
+
+---
+
+### 168. How would you version prompts?
+
+**Answer:**
+
+> I would store prompts in version-controlled repositories and associate each production request with a prompt version.
+>
+> This makes it possible to reproduce behavior and compare changes.
+
+---
+
+### 169. Why is prompt versioning important?
+
+**Answer:**
+
+> A prompt change can significantly change model behavior.
+>
+> Without versioning, it becomes difficult to determine why production results changed.
+
+---
+
+### 170. How would you deploy an LLM application safely?
+
+**Answer:**
+
+> I would use automated testing, evaluation datasets, version control and staged deployment.
+>
+> I would monitor quality and operational metrics after release and use rollback mechanisms if the new version performs poorly.
+
+---
+
+### 171. What is canary deployment?
+
+**Answer:**
+
+> A small percentage of traffic is sent to the new version before increasing traffic gradually.
+>
+> This reduces the risk of deploying a faulty version to all users.
+
+---
+
+### 172. How would you monitor a production GenAI application?
+
+**Answer:**
+
+I would monitor:
+
+* Latency
+* Error rate
+* Token usage
+* Cost
+* Retrieval quality
+* Model response quality
+* Tool failures
+* Hallucination indicators
+* User feedback
+* Security events
+
+---
+
+### 173. What is model observability?
+
+**Answer:**
+
+> Model observability is the ability to understand how the AI system behaves in production using metrics, traces, logs and evaluations.
+
+---
+
+### 174. How would you monitor token costs?
+
+**Answer:**
+
+> I would capture token usage per request and aggregate it by model, application, user group and workflow.
+>
+> This allows us to identify expensive workflows and optimize prompts, retrieval and model selection.
+
+---
+
+### 175. What is an AI evaluation pipeline?
+
+**Answer:**
+
+> It is an automated process that runs a set of representative test cases against an AI system and evaluates the outputs against predefined quality criteria.
+
+---
+
+# SECTION 18 — API / MICROSERVICES
+
+### 176. Why use FastAPI for an AI application?
+
+**Answer:**
+
+> FastAPI is lightweight, supports Python type hints, provides automatic API documentation and works well for building high-performance APIs around AI services.
+
+---
+
+### 177. How would you expose an AI agent through an API?
+
+**Answer:**
+
+```text
+Client
+  ↓
+API Gateway
+  ↓
+Authentication
+  ↓
+FastAPI
+  ↓
+Agent Orchestrator
+  ↓
+LLM / Tools / RAG
+  ↓
+Response
+```
+
+---
+
+### 178. What is REST API?
+
+**Answer:**
+
+> REST is an architectural approach for exposing resources and operations through HTTP.
+>
+> Common methods include GET, POST, PUT, PATCH and DELETE.
+
+---
+
+### 179. How would you secure an AI API?
+
+**Answer:**
+
+> I would use authentication, authorization, TLS, input validation, rate limiting, API keys or tokens where appropriate, logging and monitoring.
+>
+> I would also prevent sensitive information from being exposed through errors or logs.
+
+---
+
+### 180. What is rate limiting?
+
+**Answer:**
+
+> Rate limiting restricts how many requests a client can make during a given period.
+>
+> It helps protect services from abuse, unexpected traffic and excessive cost.
+
+---
+
+# SECTION 19 — DATA / DATABASE
+
+### 181. SQL database vs vector database?
+
+**Answer:**
+
+> A relational database is optimized for structured data and relationships.
+>
+> A vector database is optimized for similarity search over embeddings.
+>
+> Modern applications can use both because structured metadata and semantic retrieval often have different requirements.
+
+---
+
+### 182. Can PostgreSQL be used for vector search?
+
+**Answer:**
+
+> Yes. PostgreSQL can support vector search using extensions such as pgvector.
+>
+> This can be useful when the application already relies heavily on PostgreSQL and wants structured and vector data within the same ecosystem.
+
+---
+
+### 183. What is an index?
+
+**Answer:**
+
+> An index is a data structure that helps a database locate records more efficiently without scanning the entire table.
+
+---
+
+### 184. What is a vector index?
+
+**Answer:**
+
+> A vector index organizes embeddings to make similarity search more efficient.
+>
+> Different indexing techniques provide different trade-offs between search speed, accuracy and memory usage.
+
+---
+
+### 185. What is metadata in a vector database?
+
+**Answer:**
+
+> Metadata is additional information associated with an embedding, such as document ID, department, access level, date or source.
+>
+> It can be used for filtering and security.
+
+---
+
+# SECTION 20 — SYSTEM DESIGN SCENARIOS
+
+### 186. Design a document intelligence platform.
+
+**Answer:**
+
+> I would separate it into ingestion, processing, storage, AI and serving layers.
+
+```text
+Upload
+  ↓
+Cloud Storage
+  ↓
+Document Processing
+  ↓
+OCR / Parsing
+  ↓
+Chunking
+  ↓
+Embeddings
+  ↓
+Vector Store
+  ↓
+Agent / RAG
+  ↓
+Gemini
+  ↓
+API
+  ↓
+User
+```
+
+> I would add IAM, encryption, monitoring, audit logs and evaluation around the architecture.
+
+---
+
+### 187. Design an AI system that summarizes 10 million documents.
+
+**Answer:**
+
+> I would use asynchronous batch processing rather than processing documents synchronously.
+>
+> Documents would be stored in object storage, and a queue-based pipeline would distribute processing across workers.
+>
+> Results would be stored separately and indexed for retrieval.
+>
+> I would implement retries, dead-letter handling, idempotency and monitoring.
+
+---
+
+### 188. Why use asynchronous processing?
+
+**Answer:**
+
+> Large workloads don't need to block the user request.
+>
+> Asynchronous processing improves scalability and reliability and allows workers to process tasks independently.
+
+---
+
+### 189. What is idempotency?
+
+**Answer:**
+
+> An operation is idempotent if executing it multiple times produces the same intended result as executing it once.
+>
+> It is important in distributed systems because retries can occur.
+
+---
+
+### 190. How would you handle failed document processing?
+
+**Answer:**
+
+> I would use retries with controlled backoff.
+>
+> If processing continues to fail, I would move the document to a dead-letter queue and record the failure reason for investigation.
+
+---
+
+# SECTION 21 — CUSTOMER / REAL-WORLD SCENARIOS
+
+### 191. A customer says AI accuracy is only 70%. What do you do?
+
+**Answer:**
+
+> First I would understand how the 70% was measured.
+>
+> Then I would analyze failure cases and categorize them into data quality, retrieval, prompt, model or application issues.
+>
+> After identifying the dominant failure patterns, I would improve the relevant component and re-evaluate against the same benchmark.
+
+---
+
+### 192. Customer wants 99.9% accuracy from an LLM.
+
+**Answer:**
+
+> I would clarify what "accuracy" means and how it will be measured.
+>
+> If the use case requires deterministic guarantees, I would identify which parts should be handled using deterministic business logic rather than relying entirely on an LLM.
+>
+> For high-risk decisions, I would also consider validation and human review.
+
+---
+
+### 193. Customer wants to put sensitive data into an AI model.
+
+**Answer:**
+
+> I would first understand the data classification and the proposed processing architecture.
+>
+> Then I would evaluate the approved model, data-handling policies, access controls, encryption, retention and compliance requirements.
+>
+> I would not bypass organizational security controls simply to make the implementation easier.
+
+---
+
+### 194. Customer wants an AI agent to perform financial transactions automatically.
+
+**Answer:**
+
+> I would treat that as a high-risk workflow.
+>
+> I would require strong authentication, authorization, transaction validation, limits, audit logging and human approval where appropriate.
+>
+> The LLM should not directly control unrestricted financial operations.
+
+---
+
+### 195. Production AI system suddenly becomes slow. What do you investigate?
+
+**Answer:**
+
+> I would check:
+>
+> 1. Application latency
+> 2. Model latency
+> 3. Retrieval latency
+> 4. Database latency
+> 5. Tool latency
+> 6. Traffic increase
+> 7. Token count
+> 8. External service issues
+>
+> I would use distributed tracing to identify where the latency was introduced.
+
+---
+
+### 196. Production responses suddenly become worse after deployment.
+
+**Answer:**
+
+> I would compare the new version with the previous version.
+>
+> I would check model version, prompt version, retrieval configuration, document changes and application changes.
+>
+> If the regression is significant, I would consider rolling back while investigating the root cause.
+
+---
+
+### 197. A customer disagrees with your architecture recommendation.
+
+**Answer:**
+
+> I would first understand their concerns.
+>
+> Then I would compare the alternatives using objective criteria such as security, scalability, cost, maintainability and timeline.
+>
+> If their alternative better satisfies the requirements, I would be open to changing my recommendation.
+
+---
+
+### 198. You discover that your solution has a security vulnerability just before a demo.
+
+**Answer:**
+
+> I would not hide the issue just to complete the demo.
+>
+> I would assess the severity, inform the appropriate stakeholders and determine whether the demo can safely proceed with the vulnerable component disabled or isolated.
+>
+> Security issues should be handled transparently.
+
+---
+
+### 199. You disagree with your manager's technical decision.
+
+**Answer:**
+
+> I would present my concerns with evidence and explain the potential trade-offs.
+>
+> If the final decision is different from my recommendation and it is within the organization's policies, I would support the decision and execute it professionally.
+>
+> If there is a genuine security or compliance concern, I would escalate it through the appropriate process.
+
+---
+
+### 200. Why should we hire you for this AI Engineer role?
+
+**Answer:**
+
+> I bring a combination of AI engineering, GenAI, cloud and cybersecurity experience.
+>
+> I have worked with LLMs, RAG, agentic workflows, LangChain, LangGraph, Gemini, Vertex AI, APIs and enterprise document systems.
+>
+> More importantly, I approach AI as an engineering problem rather than only a model problem. I think about architecture, retrieval, evaluation, security, scalability and business requirements.
+>
+> I believe that combination would allow me to contribute effectively to enterprise AI solutions and customer-facing technical problems.
+
+---
