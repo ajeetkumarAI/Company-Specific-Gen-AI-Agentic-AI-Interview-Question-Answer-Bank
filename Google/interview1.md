@@ -2483,3 +2483,1229 @@ User
 > I believe that combination would allow me to contribute effectively to enterprise AI solutions and customer-facing technical problems.
 
 ---
+
+
+# SECTION 22 — GOOGLE CLOUD CORE SERVICES
+
+### 201. What is the difference between Compute Engine, Cloud Run and GKE?
+
+**Answer:**
+
+> Compute Engine provides virtual machines where I have more control over the operating system and infrastructure.
+>
+> Cloud Run is a managed platform for running containerized applications without managing servers directly.
+>
+> GKE is managed Kubernetes and provides much greater control over container orchestration.
+>
+> For a stateless AI API with straightforward deployment, I would consider Cloud Run. For complex Kubernetes-based workloads, I would consider GKE.
+
+---
+
+### 202. Why would you choose Cloud Run for an AI application?
+
+**Answer:**
+
+> Cloud Run is useful when I have a containerized, primarily stateless application and want managed scaling without managing Kubernetes infrastructure.
+>
+> It also works well for API-based AI applications and can integrate with other Google Cloud services.
+
+Google Cloud currently documents Cloud Run support for AI agents, streaming HTTP responses and connections to model services and external tools. ([Google Cloud Documentation][2])
+
+---
+
+### 203. What are the limitations of Cloud Run?
+
+**Answer:**
+
+> Cloud Run is not intended to replace every type of workload.
+>
+> For highly specialized Kubernetes requirements, advanced networking or workloads requiring fine-grained cluster control, GKE may be more appropriate.
+>
+> I would choose based on workload characteristics rather than assuming serverless is always better.
+
+---
+
+### 204. What is GKE?
+
+**Answer:**
+
+> GKE is Google Kubernetes Engine.
+>
+> It provides managed Kubernetes infrastructure for deploying and managing containerized workloads.
+>
+> It is useful when an organization needs Kubernetes capabilities such as advanced scheduling, service management, networking and workload orchestration.
+
+---
+
+### 205. When would you choose GKE instead of Cloud Run?
+
+**Answer:**
+
+> I would consider GKE when the application requires Kubernetes-specific capabilities, complex multi-service orchestration, specialized workloads, advanced networking or greater infrastructure control.
+>
+> If those requirements don't exist, I would consider the simpler managed option first.
+
+---
+
+### 206. What is Cloud Storage?
+
+**Answer:**
+
+> Cloud Storage is object storage.
+>
+> I would use it for unstructured data such as PDFs, images, videos, documents and other files.
+>
+> In a RAG system, it can be used as the raw document storage layer.
+
+---
+
+### 207. What is BigQuery?
+
+**Answer:**
+
+> BigQuery is Google's managed analytical data warehouse.
+>
+> It is designed for large-scale analytical queries rather than traditional transactional workloads.
+
+---
+
+### 208. BigQuery vs Cloud SQL?
+
+**Answer:**
+
+> Cloud SQL is a managed relational database suitable for transactional workloads.
+>
+> BigQuery is optimized for analytical workloads over large datasets.
+>
+> For example, application transactions might go into Cloud SQL while large-scale analytics could use BigQuery.
+
+---
+
+### 209. What is Pub/Sub?
+
+**Answer:**
+
+> Pub/Sub is an asynchronous messaging service.
+>
+> A producer publishes messages to a topic and subscribers consume those messages.
+>
+> It helps decouple services and build event-driven architectures.
+
+---
+
+### 210. Why is Pub/Sub useful in an AI pipeline?
+
+**Answer:**
+
+> Suppose thousands of documents are uploaded.
+>
+> Instead of processing every document synchronously, the application can publish document-processing events to Pub/Sub.
+>
+> Workers can then consume those events asynchronously.
+>
+> This improves scalability and decouples ingestion from processing.
+
+Google documents Pub/Sub-triggered Cloud Run architectures for event-driven processing. ([Google Cloud Documentation][3])
+
+---
+
+### 211. What happens if a Pub/Sub consumer fails?
+
+**Answer:**
+
+> The message can be retried according to the subscription configuration.
+>
+> I would also design the consumer to be idempotent and use dead-letter handling where appropriate.
+
+---
+
+### 212. What is Eventarc?
+
+**Answer:**
+
+> Eventarc provides event-driven integration between services.
+>
+> It can route events from sources such as Pub/Sub to services such as Cloud Run.
+
+---
+
+### 213. What is IAM?
+
+**Answer:**
+
+> IAM stands for Identity and Access Management.
+>
+> It controls which principals can access which resources and what actions they are allowed to perform.
+
+---
+
+### 214. User account vs service account?
+
+**Answer:**
+
+> A user account generally represents a human.
+>
+> A service account represents an application, workload or service.
+>
+> For production applications, I would use dedicated service accounts with only the permissions required by that workload.
+
+---
+
+### 215. What is least privilege?
+
+**Answer:**
+
+> Least privilege means giving a principal only the permissions required to perform its intended task.
+>
+> For example, an AI application that only needs to read a specific dataset should not receive project-wide administrative access.
+
+---
+
+### 216. What is a VPC?
+
+**Answer:**
+
+> A Virtual Private Cloud provides a logically isolated networking environment for cloud resources.
+>
+> It allows organizations to control networking, subnets, routes, firewall rules and connectivity.
+
+---
+
+### 217. Why is networking important for enterprise AI?
+
+**Answer:**
+
+> Enterprise AI applications often need to access internal databases, APIs and private services.
+>
+> Therefore, networking determines how those services communicate securely without unnecessarily exposing them to the public internet.
+
+---
+
+### 218. What is Secret Manager?
+
+**Answer:**
+
+> Secret Manager is used to securely store sensitive values such as API keys, passwords and credentials.
+>
+> Applications retrieve secrets at runtime instead of hardcoding them in source code.
+
+---
+
+### 219. Why should API keys not be stored in source code?
+
+**Answer:**
+
+> Source code may be copied, logged, committed to repositories or exposed to unauthorized users.
+>
+> Secrets should be stored in a dedicated secret-management system and accessed through controlled identities.
+
+---
+
+### 220. What is Artifact Registry?
+
+**Answer:**
+
+> Artifact Registry is used to store and manage software artifacts such as container images and packages.
+>
+> For a containerized AI application, the CI/CD pipeline can build an image and push it to Artifact Registry before deployment.
+
+---
+
+# SECTION 23 — VERTEX AI / GEMINI ARCHITECTURE
+
+### 221. How would you build a Gemini-based application on Google Cloud?
+
+**Answer:**
+
+> I would first define the application requirements.
+>
+> Then I would select an appropriate Gemini model, build the application layer, connect the required data sources or RAG system, implement authentication and authorization, add monitoring and evaluation, and finally deploy the application using an appropriate compute platform such as Cloud Run.
+
+---
+
+### 222. How do you decide which Gemini model to use?
+
+**Answer:**
+
+> I would evaluate the requirements around reasoning capability, latency, cost, context size, multimodal requirements, structured output and tool usage.
+>
+> I would benchmark candidate models using representative production-like data.
+
+---
+
+### 223. What is grounding?
+
+**Answer:**
+
+> Grounding connects model responses to trusted external information.
+>
+> RAG is one way of grounding an LLM by retrieving relevant information and providing it to the model.
+
+---
+
+### 224. Why is grounding important for enterprise applications?
+
+**Answer:**
+
+> Enterprise applications often require answers based on current and organization-specific information.
+>
+> Grounding reduces dependence on the model's internal knowledge and allows responses to reference controlled sources.
+
+---
+
+### 225. How would you build a grounded customer-support assistant?
+
+**Answer:**
+
+```text
+Customer
+   ↓
+API
+   ↓
+Authentication
+   ↓
+Query Understanding
+   ↓
+Retriever
+   ↓
+Enterprise Knowledge Base
+   ↓
+Relevant Context
+   ↓
+Gemini
+   ↓
+Guardrails
+   ↓
+Response + Sources
+```
+
+> If the customer needs transactional actions, I would add authorized tools separately.
+
+---
+
+### 226. What is the difference between grounding and fine-tuning?
+
+**Answer:**
+
+> Grounding provides external information at inference time.
+>
+> Fine-tuning changes the model's learned behavior using additional training.
+>
+> If the primary requirement is access to frequently changing enterprise knowledge, grounding is generally more appropriate.
+
+---
+
+### 227. Can you use both fine-tuning and RAG?
+
+**Answer:**
+
+> Yes.
+>
+> Fine-tuning can specialize the model's behavior while RAG provides current external knowledge.
+>
+> The combination should only be used when both provide measurable benefits because it increases system complexity.
+
+---
+
+### 228. What is model temperature useful for?
+
+**Answer:**
+
+> It controls randomness in generation.
+>
+> For deterministic enterprise tasks such as extraction or classification, I generally prefer lower randomness.
+>
+> For creative generation, higher randomness may be useful.
+
+---
+
+### 229. How would you handle a model rate limit?
+
+**Answer:**
+
+> I would implement controlled retries with exponential backoff, respect service quotas, use rate limiting on my own API and consider queue-based processing for workloads that don't require synchronous responses.
+
+---
+
+### 230. How would you design for model availability?
+
+**Answer:**
+
+> I would monitor model/API errors and latency, implement appropriate retries, define fallback behavior and avoid making the application dependent on a single failure-prone component where alternatives are available.
+
+---
+
+# SECTION 24 — CLOUD AI SYSTEM DESIGN
+
+### 231. Design an enterprise HR assistant.
+
+**Answer:**
+
+> I would first identify the data sources and access-control requirements.
+>
+> ```text
+> Employee
+>    ↓
+> Authentication
+>    ↓
+> Application
+>    ↓
+> Access Control
+>    ↓
+> RAG
+>    ↓
+> HR Documents
+>    ↓
+> Gemini
+>    ↓
+> Response + Citation
+> ```
+>
+> Each employee should only retrieve information they are authorized to access.
+
+---
+
+### 232. How would you make the HR assistant multi-tenant?
+
+**Answer:**
+
+> I would isolate tenant data logically or physically depending on security requirements.
+>
+> Every request would carry tenant identity, and retrieval would enforce tenant-level filtering.
+>
+> I would also ensure that cached responses cannot cross tenant boundaries.
+
+---
+
+### 233. Why is tenant isolation important?
+
+**Answer:**
+
+> Without proper isolation, information belonging to one organization or business unit could accidentally become available to another.
+>
+> This is both a security and compliance concern.
+
+---
+
+### 234. How would you design a banking document assistant?
+
+**Answer:**
+
+> I would use:
+>
+> * Secure document storage
+> * Document processing
+> * Metadata extraction
+> * Embeddings
+> * Vector retrieval
+> * Access control
+> * Gemini
+> * Citation
+> * Audit logging
+> * Monitoring
+>
+> For sensitive use cases, I would also implement human review for high-impact decisions.
+
+---
+
+### 235. Design an AI application that processes millions of documents.
+
+**Answer:**
+
+> I would use asynchronous processing.
+>
+> ```text
+> Document Upload
+>       ↓
+> Cloud Storage
+>       ↓
+> Event / Pub/Sub
+>       ↓
+> Processing Workers
+>       ↓
+> OCR / Parsing
+>       ↓
+> Chunking
+>       ↓
+> Embeddings
+>       ↓
+> Vector Store
+> ```
+>
+> The workers should be horizontally scalable and idempotent.
+
+---
+
+### 236. Why use asynchronous architecture for millions of documents?
+
+**Answer:**
+
+> Processing millions of documents synchronously would create long-running requests and poor scalability.
+>
+> An asynchronous architecture allows work to be queued and processed independently by scalable workers.
+
+---
+
+### 237. How would you prevent duplicate processing?
+
+**Answer:**
+
+> I would use an idempotency key or document version identifier.
+>
+> Before processing, the system can check whether that document version has already been successfully processed.
+
+---
+
+### 238. What if document processing takes 20 minutes?
+
+**Answer:**
+
+> I wouldn't keep the user request open for 20 minutes.
+>
+> I would create an asynchronous job and return a job ID.
+>
+> The client could poll for status or receive an event when processing completes.
+
+---
+
+### 239. How would you design an AI application for real-time responses?
+
+**Answer:**
+
+> I would minimize retrieval latency, use streaming responses, keep prompts concise, parallelize independent operations and avoid unnecessary agent steps.
+>
+> I would also measure end-to-end latency rather than only model latency.
+
+---
+
+### 240. What is streaming?
+
+**Answer:**
+
+> Streaming sends generated output incrementally instead of waiting for the complete response.
+>
+> This improves perceived responsiveness for users.
+
+---
+
+# SECTION 25 — ADVANCED AGENT DESIGN
+
+### 241. Design an AI customer-service agent.
+
+**Answer:**
+
+```text
+Customer
+   ↓
+Authentication
+   ↓
+Agent
+   ├── Knowledge Search
+   ├── Order API
+   ├── Customer API
+   └── Escalation Tool
+            ↓
+         Gemini
+            ↓
+        Response
+```
+
+> The agent can answer questions through RAG and perform authorized actions through tools.
+
+---
+
+### 242. What if the customer-service agent wants to refund an order?
+
+**Answer:**
+
+> The agent should not directly have unrestricted refund access.
+>
+> I would expose a controlled refund tool with authorization, transaction limits and validation.
+>
+> Depending on the risk level, I may require human approval.
+
+---
+
+### 243. How would you stop an agent from calling the wrong tool?
+
+**Answer:**
+
+> I would use clear tool descriptions, constrained tool availability, input schemas and application-side validation.
+>
+> The application should reject invalid or unauthorized tool calls.
+
+---
+
+### 244. What is ReAct?
+
+**Answer:**
+
+> ReAct stands for Reasoning and Acting.
+>
+> The general concept is that the model alternates between reasoning about the task and taking actions through tools, then uses the results to continue the task.
+
+---
+
+### 245. What is planner-executor architecture?
+
+**Answer:**
+
+> A planner creates a sequence of tasks and an executor performs those tasks.
+>
+> For example:
+>
+> ```text
+> User Goal
+>    ↓
+> Planner
+>    ↓
+> Task 1 → Executor
+> Task 2 → Executor
+> Task 3 → Executor
+>    ↓
+> Final Result
+> ```
+
+---
+
+### 246. Planner agent vs supervisor agent?
+
+**Answer:**
+
+> A planner primarily determines the steps required to complete a task.
+>
+> A supervisor coordinates multiple agents or tools and decides which component should execute each step.
+
+---
+
+### 247. What is agent memory?
+
+**Answer:**
+
+> Agent memory allows information from previous interactions or workflow steps to be retained.
+>
+> It can include short-term conversational state and longer-term persisted information.
+
+---
+
+### 248. What is the risk of long-term agent memory?
+
+**Answer:**
+
+> It can retain sensitive or incorrect information for too long.
+>
+> I would define retention policies, access controls, data classification and deletion mechanisms.
+
+---
+
+### 249. How would you prevent an agent from using stale information?
+
+**Answer:**
+
+> I would use current data sources where necessary, attach timestamps to retrieved information and define freshness requirements.
+>
+> For frequently changing information, I would avoid relying only on static model knowledge.
+
+---
+
+### 250. How would you test an AI agent?
+
+**Answer:**
+
+> I would test:
+>
+> * Correct tool selection
+> * Correct parameters
+> * Tool failures
+> * Unauthorized requests
+> * Prompt injection
+> * Infinite loops
+> * Incorrect data
+> * Timeout handling
+> * Final answer quality
+> * Cost and latency
+
+---
+
+# SECTION 26 — ADVANCED SECURITY
+
+### 251. What is excessive agency?
+
+**Answer:**
+
+> Excessive agency occurs when an AI system has more authority or capability than necessary.
+>
+> For example, an assistant that only needs to read invoices should not have permission to delete financial records.
+
+---
+
+### 252. How do you implement least privilege for an AI agent?
+
+**Answer:**
+
+> I would give the agent only the tools required for its task.
+>
+> Each tool would have narrowly scoped permissions and the underlying service account would have the minimum required IAM permissions.
+
+---
+
+### 253. What is indirect prompt injection?
+
+**Answer:**
+
+> Indirect prompt injection occurs when instructions are embedded in external content that the AI system retrieves or processes.
+>
+> For example, a malicious instruction inside a PDF could attempt to manipulate an agent.
+
+---
+
+### 254. How would you defend against indirect prompt injection?
+
+**Answer:**
+
+> I would treat retrieved content as untrusted data.
+>
+> I would separate system instructions from retrieved content, restrict tool permissions, validate tool calls and require authorization outside the model.
+
+---
+
+### 255. Can input filtering completely stop prompt injection?
+
+**Answer:**
+
+> No.
+>
+> Prompt injection is an evolving class of attacks, so I would use defense in depth rather than relying on a single filter.
+
+---
+
+### 256. What is data exfiltration in an AI system?
+
+**Answer:**
+
+> Data exfiltration occurs when sensitive information is transferred to an unauthorized destination.
+>
+> In AI systems, an attacker might try to manipulate the model or tools into exposing confidential information.
+
+---
+
+### 257. How would you prevent an agent from sending confidential data externally?
+
+**Answer:**
+
+> I would enforce data access and outbound communication controls at the application and infrastructure layers.
+>
+> I would not rely solely on the LLM to decide whether data is confidential.
+
+---
+
+### 258. What is output validation?
+
+**Answer:**
+
+> Output validation checks whether model-generated information satisfies expected rules before the application uses it.
+>
+> Examples include schema validation, allowed-value validation and security checks.
+
+---
+
+### 259. What is tool validation?
+
+**Answer:**
+
+> Tool validation verifies that the requested tool, parameters and authorization are valid before executing the action.
+
+---
+
+### 260. What is a secure AI architecture?
+
+**Answer:**
+
+> I would use defense in depth:
+>
+> ```text
+> Identity
+> ↓
+> Authorization
+> ↓
+> Input Validation
+> ↓
+> LLM / Agent
+> ↓
+> Tool Authorization
+> ↓
+> Output Validation
+> ↓
+> Monitoring / Audit
+> ```
+>
+> Security should not depend on the model behaving correctly.
+
+---
+
+# SECTION 27 — MLOPS / PRODUCTION
+
+### 261. What is CI/CD for an AI application?
+
+**Answer:**
+
+> CI/CD automates testing, packaging and deployment.
+>
+> For an AI application, I would include both software tests and AI-specific evaluation tests before deployment.
+
+---
+
+### 262. What is different about testing GenAI applications?
+
+**Answer:**
+
+> Traditional software often has deterministic outputs.
+>
+> LLM outputs can vary.
+>
+> Therefore, GenAI testing needs additional evaluation around correctness, relevance, safety, grounding and consistency.
+
+---
+
+### 263. What is a golden dataset?
+
+**Answer:**
+
+> A golden dataset is a curated set of representative inputs with expected or reference outcomes.
+>
+> It can be used to compare different model, prompt or retrieval versions.
+
+---
+
+### 264. How would you create a golden dataset for RAG?
+
+**Answer:**
+
+> I would collect representative real-world questions, identify the expected source documents and define expected answer characteristics.
+>
+> I would include both normal and difficult cases, including ambiguous queries and cases where the correct response should be "I don't have enough information."
+
+---
+
+### 265. What is regression testing for LLMs?
+
+**Answer:**
+
+> After changing a prompt, model, retrieval strategy or application code, I would rerun the evaluation dataset.
+>
+> If previously successful cases degrade significantly, the change has introduced a regression.
+
+---
+
+### 266. How do you compare two prompt versions?
+
+**Answer:**
+
+> Run both prompts against the same evaluation dataset and compare quality, latency, token usage, safety and failure rates.
+
+---
+
+### 267. What is shadow testing?
+
+**Answer:**
+
+> The new system receives copies of real traffic without affecting the production response.
+>
+> This allows us to evaluate a new version safely before exposing it to users.
+
+---
+
+### 268. How would you roll back a bad AI deployment?
+
+**Answer:**
+
+> I would maintain versioned application, prompt and model configurations.
+>
+> If monitoring shows significant regression, I would switch traffic back to the previous known-good version.
+
+---
+
+### 269. What is observability?
+
+**Answer:**
+
+> Observability allows us to understand the internal state of a system using logs, metrics and traces.
+
+---
+
+### 270. What metrics would you monitor for an AI API?
+
+**Answer:**
+
+> I would monitor:
+>
+> * Request count
+> * Error rate
+> * Latency
+> * Token usage
+> * Cost
+> * Model failures
+> * Retrieval latency
+> * Tool failures
+> * User feedback
+> * AI quality metrics
+
+---
+
+# SECTION 28 — PYTHON / SQL
+
+### 271. What is the difference between shallow copy and deep copy?
+
+**Answer:**
+
+> A shallow copy creates a new outer object but may still reference nested objects.
+>
+> A deep copy recursively creates independent copies of nested objects.
+
+---
+
+### 272. What is a Python decorator?
+
+**Answer:**
+
+> A decorator is a function that modifies or extends another function's behavior without changing its original implementation.
+
+---
+
+### 273. What is a context manager?
+
+**Answer:**
+
+> A context manager manages resources that need setup and cleanup.
+>
+> A common example is opening a file using `with`, which ensures the file is properly closed.
+
+---
+
+### 274. List comprehension vs normal loop?
+
+**Answer:**
+
+> Both can produce similar results.
+>
+> List comprehensions are concise and readable for simple transformations.
+>
+> For complex logic, a normal loop may be clearer.
+
+---
+
+### 275. What is an iterator?
+
+**Answer:**
+
+> An iterator is an object that produces values one at a time, typically using the iterator protocol.
+>
+> This allows efficient processing without loading everything into memory.
+
+---
+
+### 276. SQL: INNER JOIN vs LEFT JOIN?
+
+**Answer:**
+
+> INNER JOIN returns rows where matching records exist in both tables.
+>
+> LEFT JOIN returns all rows from the left table and matching rows from the right table when available.
+
+---
+
+### 277. What is GROUP BY?
+
+**Answer:**
+
+> GROUP BY groups rows based on one or more columns so aggregate functions such as COUNT, SUM or AVG can be applied to each group.
+
+---
+
+### 278. What is a window function?
+
+**Answer:**
+
+> A window function performs calculations across related rows without collapsing them into a single row.
+>
+> Examples include `ROW_NUMBER`, `RANK`, `LAG` and `LEAD`.
+
+---
+
+### 279. Find the second-highest salary using SQL.
+
+**Answer:**
+
+```sql
+SELECT MAX(salary)
+FROM employees
+WHERE salary < (
+    SELECT MAX(salary)
+    FROM employees
+);
+```
+
+> For more complex requirements involving duplicates, I would use `DENSE_RANK()`.
+
+---
+
+### 280. How would you find duplicate records?
+
+**Answer:**
+
+```sql
+SELECT email, COUNT(*)
+FROM employees
+GROUP BY email
+HAVING COUNT(*) > 1;
+```
+
+> I would first identify which columns define a duplicate for the specific business requirement.
+
+---
+
+# SECTION 29 — CODING INTERVIEW
+
+### 281. What is binary search?
+
+**Answer:**
+
+> Binary search works on sorted data.
+>
+> It repeatedly divides the search space into half.
+>
+> Its time complexity is `O(log n)`.
+
+---
+
+### 282. What is the difference between BFS and DFS?
+
+**Answer:**
+
+> BFS explores level by level and typically uses a queue.
+>
+> DFS explores as deeply as possible before backtracking and can use recursion or a stack.
+
+---
+
+### 283. When would BFS be useful?
+
+**Answer:**
+
+> BFS is useful when I need the shortest path in an unweighted graph or need to process nodes level by level.
+
+---
+
+### 284. When would DFS be useful?
+
+**Answer:**
+
+> DFS is useful for traversal, connected components, cycle detection and exploring paths deeply.
+
+---
+
+### 285. What is a hash table?
+
+**Answer:**
+
+> A hash table stores key-value pairs using a hash function.
+>
+> Average lookup, insertion and deletion are typically `O(1)`.
+
+---
+
+### 286. What is the difference between stack and queue?
+
+**Answer:**
+
+> Stack follows LIFO — Last In, First Out.
+>
+> Queue follows FIFO — First In, First Out.
+
+---
+
+### 287. What is a sliding window?
+
+**Answer:**
+
+> Sliding window is a technique for efficiently processing contiguous portions of an array or string.
+>
+> Instead of recalculating everything for each window, we maintain and update information as the window moves.
+
+---
+
+### 288. What is recursion?
+
+**Answer:**
+
+> Recursion occurs when a function calls itself to solve smaller instances of the same problem.
+>
+> It requires a proper base condition to terminate.
+
+---
+
+### 289. What is Big-O of searching an unsorted array?
+
+**Answer:**
+
+> Linear search requires `O(n)` time in the worst case.
+
+---
+
+### 290. What is Big-O of binary search?
+
+**Answer:**
+
+> `O(log n)` time, assuming the data is sorted and random access is available.
+
+---
+
+# SECTION 30 — FINAL 10 REALISTIC INTERVIEW SCENARIOS
+
+### 291. Design an AI assistant that can search documents and call APIs.
+
+**Answer:**
+
+> I would use an agentic RAG architecture.
+>
+> ```text
+> User
+> ↓
+> Agent
+> ├── RAG Tool
+> │     ↓
+> │  Vector Store
+> │
+> ├── API Tool
+> │     ↓
+> │  Enterprise API
+> │
+> └── Calculator / Utility Tool
+> ```
+>
+> The agent decides which tool is appropriate, while authorization and validation remain outside the LLM.
+
+---
+
+### 292. The agent gives a correct answer but uses the wrong API. What do you do?
+
+**Answer:**
+
+> I would treat tool selection as a separate evaluation problem.
+>
+> I would inspect the tool descriptions, available tools, routing logic and examples.
+>
+> Then I would create test cases specifically for tool-selection accuracy.
+
+---
+
+### 293. Your RAG answer is correct but the source citation is wrong.
+
+**Answer:**
+
+> I would treat citation correctness as a separate metric from answer correctness.
+>
+> I would verify that every citation maps to the actual retrieved source supporting the claim.
+>
+> Incorrect citations can be particularly dangerous because they create false confidence.
+
+---
+
+### 294. Your AI system has excellent accuracy but very high cost.
+
+**Answer:**
+
+> I would analyze where the cost originates.
+>
+> It could be excessive context, large models, unnecessary agent iterations, redundant retrieval or repeated requests.
+>
+> I would then optimize the highest-cost component while measuring whether quality remains acceptable.
+
+---
+
+### 295. Your system is cheap but accuracy is poor.
+
+**Answer:**
+
+> I would establish the minimum acceptable quality first.
+>
+> Then I would identify the major sources of errors and evaluate whether better retrieval, a stronger model, better prompting or additional validation would provide the best improvement.
+
+---
+
+### 296. A customer wants a multi-agent architecture because it sounds advanced.
+
+**Answer:**
+
+> I would first understand the actual business requirement.
+>
+> If a single-agent or RAG architecture solves the problem more simply, I would explain that.
+>
+> Architecture should be driven by requirements rather than technology trends.
+
+---
+
+### 297. An agent gets stuck in a loop.
+
+**Answer:**
+
+> I would inspect the execution trace and identify why the termination condition isn't being reached.
+>
+> I would add maximum iterations, explicit termination criteria, tool-result validation and timeout controls.
+
+---
+
+### 298. A retrieved document contains malicious instructions.
+
+**Answer:**
+
+> I would treat the document as untrusted data.
+>
+> Its instructions should not override system or application instructions.
+>
+> Tool access should remain controlled by deterministic authorization mechanisms.
+
+---
+
+### 299. You have 100 AI agents across an enterprise. How do you govern them?
+
+**Answer:**
+
+> I would establish an agent registry and standard governance framework covering:
+>
+> * Owner
+> * Purpose
+> * Tools
+> * Permissions
+> * Data sources
+> * Model
+> * Version
+> * Risk level
+> * Evaluation
+> * Monitoring
+> * Audit history
+>
+> High-risk agents should have stronger approval and monitoring requirements.
+
+---
+
+### 300. How would you explain your overall AI engineering approach?
+
+**Answer:**
+
+> I start with the business problem rather than immediately selecting a model.
+>
+> First, I clarify the requirements, data, users, security and success criteria.
+>
+> Then I determine whether the solution needs traditional ML, an LLM, RAG, an agent or a combination.
+>
+> I design the architecture around reliability, security, scalability, latency and cost.
+>
+> Then I build a prototype, establish an evaluation dataset, measure the system and iterate.
+>
+> Finally, I productionize it with authentication, monitoring, logging, CI/CD, evaluation and governance.
+>
+> My focus is not just getting an LLM to produce a good answer. It is building an AI system that can operate reliably in a real enterprise environment.
+
+---
+
