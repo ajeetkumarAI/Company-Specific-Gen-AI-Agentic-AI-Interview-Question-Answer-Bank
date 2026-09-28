@@ -1253,7 +1253,6 @@ This section is particularly important because the Google role explicitly descri
 
 ### 99. Tell me about a difficult problem you solved.
 
-Use your **Citi Jira Story Analyzer**.
 
 Structure:
 
