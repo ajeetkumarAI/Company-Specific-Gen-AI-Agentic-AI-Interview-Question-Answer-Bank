@@ -14,7 +14,7 @@
 
 ### Answer
 
-I have around 4.5 years of professional experience, with my recent focus on AI and Generative AI engineering.
+I have around [X] years of professional experience, with my recent focus on AI and Generative AI engineering.
 
 I work mainly with Python, machine learning, LLMs, RAG, agentic AI, Gemini, Vertex AI, LangChain, LangGraph, vector databases, APIs, and cloud technologies.
 
