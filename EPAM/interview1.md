@@ -312,6 +312,43 @@ if __name__ == "__main__":
 
 ```
 
+The comparison between **Claude Code** and **Claude CoWork** was included in the guide under **Section 4, Question 7**.
+
+An expanded breakdown highlights the specific differences:
+
+---
+
+### Claude Code vs. Claude CoWork
+
+```
+                         [ Shared Underlying Model ]
+                      (Claude 3.7 Sonnet / Opus Engine)
+                                     │
+           ┌─────────────────────────┴─────────────────────────┐
+           ▼                                                   ▼
+  [ Claude Code ]                                     [ Claude CoWork ]
+  • Developer-focused                                 • Non-technical/Operations-focused
+  • CLI / Terminal / IDE                             • Desktop App GUI / Sandboxed VM
+  • Codebases, Git, CI/CD, Shell                     • Documents, Spreadsheets, Research
+  • MCP via Config / Code Hooks                       • Connector Marketplace / UI Plugins
+
+```
+
+| Dimension | **Claude Code** | **Claude CoWork** |
+| --- | --- | --- |
+| **Target Audience** | Software Engineers, LLM/AI Engineers, DevOps | Non-technical knowledge workers, Operations, Legal, Finance |
+| **Primary Interface** | Command-Line Interface (CLI / Terminal) & IDE extension | GUI (Integrated inside the Claude Desktop App) |
+| **Execution Surface** | Direct filesystem/shell access within project workspace | Sandboxed virtual workspace / isolated environment |
+| **Primary Deliverables** | Pull Requests, Git diffs, feature implementation, refactors, unit tests | Formatted reports, spreadsheets, contract data extraction, presentation slides |
+| **Tooling & Integrations** | Config-file-driven MCP servers, system hooks, terminal tools | Plug-and-play visual Connector Marketplace (Salesforce, Slack, Notion) |
+| **Workflow Model** | Plan mode, strict human-in-the-loop permission gates, diff review | Automated background task execution and scheduled desktop workflows |
+
+---
+
+### Key Interview Response Summary
+
+> *"While both run on the same agentic loops and underlying Claude models, **Claude Code** is tailored for software engineering workflows (terminal execution, multi-file code diffs, Git operations, and direct shell tool access). **Claude CoWork**, on the other hand, targets general business productivity—running in an isolated, sandboxed desktop app to handle document processing, multi-source research, and office task automation using a click-and-connect marketplace rather than raw config files."*
+
 ---
 
 ## 6. Preparation Takeaways for EPAM Senior AI Engineer Roles
