@@ -772,7 +772,7 @@ I have a foundation in machine learning and data science, but my recent work is 
 
 ### Answer
 
-I have around 4.5 years of overall professional experience, with a significant part of my recent work focused on AI/ML and Generative AI engineering.
+I have around X+ years of overall professional experience, with a significant part of my recent work focused on AI/ML and Generative AI engineering.
 
 ---
 
@@ -974,7 +974,7 @@ Prepare these for the **technical rounds**, not as the main focus of the recruit
 
 # 79. 60-Second Introduction — Final Version
 
-I have around 4.5 years of professional experience, with my recent focus on AI and Generative AI engineering.
+I have around X+ years of professional experience, with my recent focus on AI and Generative AI engineering.
 
 I work mainly with Python, machine learning, LLMs, RAG, agentic AI, Gemini, Vertex AI, LangChain, LangGraph, vector databases, APIs, and cloud technologies.
 
@@ -988,7 +988,7 @@ I am now looking for a Cloud AI Engineer opportunity where I can work on product
 
 # 80. 30-Second Introduction
 
-I am an AI Engineer with around 4.5 years of experience, mainly focused on AI/ML and Generative AI.
+I am an AI Engineer with around X+ years of experience, mainly focused on AI/ML and Generative AI.
 
 My recent work includes LLM applications, RAG, agentic AI, Gemini, Vertex AI, LangChain, LangGraph, vector databases, APIs, and cloud deployment.
 
@@ -1000,7 +1000,7 @@ I am now looking to apply this experience to production-scale cloud AI systems a
 
 ## My Profile
 
-* ~4.5 years professional experience
+* X+ years professional experience
 * AI Engineer
 * Python
 * Machine Learning
