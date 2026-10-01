@@ -1,6 +1,6 @@
 # Wipro — Generative AI Engineer Technical Interview Guide (Coding & Production Systems Round)
 
-This document provides a comprehensive, production-grade guide based on the live transcript of a **Generative AI Engineer Coding & System Resilience Round** at **Wipro**. 
+This document provides a comprehensive, production-grade guide on a **Generative AI Engineer Coding & System Resilience Round** at **Wipro**. 
 
 Unlike standard algorithmic coding sessions, this interview evaluates how candidates translate real-world LLM production failures (flaky APIs, high latency, context limits, retrieval noise, structured output validation) into resilient Python code and backend system designs.
 
