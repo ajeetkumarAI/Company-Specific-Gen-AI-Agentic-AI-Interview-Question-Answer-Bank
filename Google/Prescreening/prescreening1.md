@@ -307,6 +307,7 @@ Answer the following:
 5. What is the time complexity?
 6. What is the space complexity?
 
+```
 Output: [4, 3, 2, 1]
 
 Swaps:
@@ -319,7 +320,7 @@ Total swaps = 0 + 1 + 2 + 3 = 6
 
 Time Complexity = O(n²)
 Space Complexity = O(1)
-
+```
 
 ## Question 2: Palindrome, True/False and Function Calls
 
