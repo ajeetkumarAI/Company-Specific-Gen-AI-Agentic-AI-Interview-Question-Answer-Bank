@@ -284,8 +284,6 @@ It is useful for stateless APIs, AI application backends, and services that need
 Coding Question
 
 ````md
-# Google-Style Code Tracing Questions
-
 ## Question 1: Nested Loop and Swapping
 
 Given the following code:
@@ -308,6 +306,20 @@ Answer the following:
 4. What is the total number of iterations of the inner loop?
 5. What is the time complexity?
 6. What is the space complexity?
+
+Output: [4, 3, 2, 1]
+
+Swaps:
+i = 0 → 0 swaps
+i = 1 → 1 swap
+i = 2 → 2 swaps
+i = 3 → 3 swaps
+
+Total swaps = 0 + 1 + 2 + 3 = 6
+
+Time Complexity = O(n²)
+Space Complexity = O(1)
+
 
 ## Question 2: Palindrome, True/False and Function Calls
 
@@ -349,6 +361,22 @@ Answer the following:
 12. What will `check("")` return?
 
 ```
+Output:
+True
+True
+False
+
+True = 2 times
+False = 1 time
+
+"soos" → 2 comparisons → True
+"moom" → 2 comparisons → True
+"soon" → 1 comparison → False
+
+Time Complexity = O(n)
+Space Complexity = O(1)
+
+return False → function stops immediately
 ```
 
 
