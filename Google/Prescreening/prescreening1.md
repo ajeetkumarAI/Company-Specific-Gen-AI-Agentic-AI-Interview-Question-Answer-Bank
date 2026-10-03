@@ -281,6 +281,76 @@ For an AI application, I can package a Python API or AI service into a container
 It is useful for stateless APIs, AI application backends, and services that need automatic scaling.
 
 ---
+Coding Question
+
+````md
+# Google-Style Code Tracing Questions
+
+## Question 1: Nested Loop and Swapping
+
+Given the following code:
+
+```python
+arr = [1, 2, 3, 4]
+
+for i in range(len(arr)):
+    for j in range(i):
+        arr[i], arr[j] = arr[j], arr[i]
+
+print(arr)
+````
+
+Answer the following:
+
+1. What will be the final output?
+2. How many times will the swap operation execute?
+3. Show the array after every swap.
+4. What is the total number of iterations of the inner loop?
+5. What is the time complexity?
+6. What is the space complexity?
+
+## Question 2: Palindrome, True/False and Function Calls
+
+Given the following code:
+
+```python
+def check(s):
+    start = 0
+    end = len(s) - 1
+
+    while start < end:
+        if s[start] != s[end]:
+            return False
+
+        start += 1
+        end -= 1
+
+    return True
+
+
+print(check("soos"))
+print(check("moom"))
+print(check("soon"))
+```
+
+Answer the following:
+
+1. What will be the final output?
+2. How many times will `True` be printed?
+3. How many times will `False` be printed?
+4. How many character comparisons are performed for `"soos"`?
+5. How many character comparisons are performed for `"moom"`?
+6. How many character comparisons are performed for `"soon"`?
+7. Why does `"soon"` return `False` immediately?
+8. What happens when `return False` is executed?
+9. What is the time complexity of `check()`?
+10. What is the space complexity of `check()`?
+11. What will `check("a")` return?
+12. What will `check("")` return?
+
+```
+```
+
 
 # 22. What Is BigQuery?
 
